@@ -11,6 +11,10 @@
     <p>Position: {{ player.position }}</p>
     <p>Jersey Number: {{ player.jerseyNumber }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'players_update' player.id %}">Edit</a>
+    <a href="{% url 'players_delete' player.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}

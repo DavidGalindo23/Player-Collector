@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Player
 
 
@@ -20,3 +21,15 @@ def players_index(request):
 def players_detail(request, player_id):
     player = Player.objects.get(id=player_id)
     return render(request, 'players/detail.html', { 'player': player })
+
+class PlayerCreate(CreateView):
+    model = Player
+    fields = '__all__'
+
+class PlayerUpdate(UpdateView):
+    model = Player
+    fields = ['age', 'team', 'jerseyNumber']
+
+class PlayerDelete(DeleteView):
+    model = Player
+    success_url = '/players/'
