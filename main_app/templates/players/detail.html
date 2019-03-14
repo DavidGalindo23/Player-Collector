@@ -39,6 +39,54 @@
     </table>
   </div>
 </div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ player.name }}'s Sneakers</h3>
+    {% if player.sneakers.count %}
+      {% for sneaker in player.sneakers.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ sneaker.color }}">{{ sneaker.color }}</span> {{ sneaker.name }}
+            </span>
+          </div>
+          <div class="card-action">
+              <form action="{% url 'unassoc_sneaker' player.id sneaker.id %}" method="post">
+                  {% csrf_token %}
+                <button type="submit" class="btn">Remove</button>
+              </form>
+            </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Sneakers :(</h5>
+    {% endif %}
+  </div>
+  <!-- Available sneakers will come after this line -->
+  <div class="col s6">
+      <h3>Available Sneakers</h3>
+      {% if sneakers.count %}
+        {% for sneaker in sneakers.all %}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+                A <span style="color: {{ sneaker.color }}">{{ sneaker.color }}</span> {{ sneaker.name }}
+              </span>
+            </div>
+            <div class="card-action">
+              <form action="{% url 'assoc_sneaker' player.id sneaker.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn">Add</button>
+              </form>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h5>{{player.name}} Already Has All Toys Available</h5>
+      {% endif %}
+    </div>
+</div>
 <script>  
 var dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {

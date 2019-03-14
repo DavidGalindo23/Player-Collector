@@ -8,6 +8,15 @@ STATUS = (
     ('r', 'Rest')
 )
 
+class Sneaker(models.Model):
+    name = models.CharField(max_length=100)
+    color = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('sneaker_detail', kwargs={'pk': self.id})
 
 # Create your models here.
 class Player(models.Model):
@@ -16,6 +25,7 @@ class Player(models.Model):
     team = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     jerseyNumber = models.IntegerField()
+    sneakers = models.ManyToManyField(Sneaker)
 
     def __str__(self):
         return self.name
